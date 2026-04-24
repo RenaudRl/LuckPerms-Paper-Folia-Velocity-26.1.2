@@ -4,7 +4,7 @@
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![Target](https://img.shields.io/badge/Target-Paper%20/%20Folia%20/%20Velocity%20/%20BTC--CORE-blue)
 
-**LuckPerms-Folia** is a high-performance, streamlined fork of **LuckPerms**, engineered specifically for **BTC Studio** infrastructure and the **BTC-CORE** server fork. It represents a modern approach to permission management, specifically optimized for **BTC-CORE (Paper/Folia 1.21.11+)** and **Velocity 3.x** by removing legacy baggage and focusing on native multi-threaded performance.
+**LuckPerms-Folia** is a high-performance, streamlined fork of **LuckPerms**, engineered specifically for **BTC Studio** infrastructure and the **BTC-CORE** server fork. It represents a modern approach to permission management, specifically optimized for **BTC-CORE (Paper/Folia 26.1.2+)** and **Velocity 3.x** by removing legacy baggage and focusing on native multi-threaded performance.
 
 > [!WARNING]
 > **DEVELOPER COMPATIBILITY NOTICE**
@@ -51,8 +51,8 @@ Requires **Java 21** and a strong understanding of Gradle.
 
 ```bash
 # Clone the repository
-git clone https://github.com/RenaudRl/LuckPerms-Paper-Folia-Velocity-1.21.11.git
-cd LuckPerms-Paper-Folia-Velocity-1.21.11
+git clone https://github.com/RenaudRl/LuckPerms-Paper-Folia-Velocity-26.1.2.git
+cd LuckPerms-Paper-Folia-Velocity-26.1.2
 
 # Build the project (skipping tests for faster cycles)
 ./gradlew clean build -x test

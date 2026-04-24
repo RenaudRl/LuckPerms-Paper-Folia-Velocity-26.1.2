@@ -27,20 +27,29 @@ package me.lucko.luckperms.bukkit;
 
 import me.lucko.luckperms.common.plugin.scheduler.AbstractJavaScheduler;
 import me.lucko.luckperms.common.plugin.scheduler.SchedulerAdapter;
+import me.lucko.luckperms.common.plugin.scheduler.SchedulerTask;
 
 import java.util.concurrent.Executor;
 
 public class BukkitSchedulerAdapter extends AbstractJavaScheduler implements SchedulerAdapter {
+    private final LPBukkitBootstrap bootstrap;
     private final Executor sync;
 
     public BukkitSchedulerAdapter(LPBukkitBootstrap bootstrap) {
         super(bootstrap);
-        this.sync = r -> bootstrap.getServer().getScheduler().scheduleSyncDelayedTask(bootstrap.getLoader(), r);
+        this.bootstrap = bootstrap;
+        this.sync = r -> bootstrap.getServer().getScheduler().runTask(bootstrap.getLoader(), r);
     }
 
     @Override
     public Executor sync() {
         return this.sync;
+    }
+
+    @Override
+    public SchedulerTask executeSyncLater(Runnable task, long delayTicks) {
+        org.bukkit.scheduler.BukkitTask t = this.bootstrap.getServer().getScheduler().runTaskLater(this.bootstrap.getLoader(), task, delayTicks);
+        return t::cancel;
     }
 
 }

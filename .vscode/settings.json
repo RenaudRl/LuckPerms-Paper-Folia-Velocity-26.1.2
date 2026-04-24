@@ -1,0 +1,36 @@
+{
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx16G -Xms100m -Xlog:disable",
+    "git.ignoreLimitWarning": true,
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "java.autobuild.enabled": false,
+    "java.import.gradle.enabled": false,
+    "java.gradle.buildServer.enabled": false,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "files.watcherExclude": {
+        "**/Docs/**": true,
+        "**/WIKI extensions/**": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true
+    },
+    "search.exclude": {
+        "Docs": true,
+        "WIKI extensions": true
+    },
+    "java.import.exclusions": [
+        "**/Docs/**",
+        "**/WIKI extensions/**",
+        "**/.git/**",
+        "**/node_modules/**",
+        "**/build/**"
+    ],
+    "kotlin.languageServer.enabled": false,
+    "kotlin.diagnostics.enabled": false,
+    "kotlin.indexing.enabled": false
+}

@@ -76,6 +76,15 @@ public interface SchedulerAdapter {
     SchedulerTask asyncLater(Runnable task, long delay, TimeUnit unit);
 
     /**
+     * Executes the given task sync with a delay.
+     *
+     * @param task the task
+     * @param delayTicks the delay in ticks
+     * @return the resultant task instance
+     */
+    SchedulerTask executeSyncLater(Runnable task, long delayTicks);
+
+    /**
      * Executes the given task repeatedly at a given interval.
      *
      * @param task the task

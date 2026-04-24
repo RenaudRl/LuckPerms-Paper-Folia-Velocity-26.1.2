@@ -47,19 +47,45 @@ public class FoliaTpsCalculator implements ContextCalculator<Player> {
     @Override
     public void calculate(@NonNull Player subject, @NonNull ContextConsumer consumer) {
         Location loc = subject.getLocation();
-        double[] tps = Bukkit.getRegionTPS(loc);
-        if (tps == null || tps.length < 5) {
+        double[] tps = getTps(loc);
+        if (tps == null) {
             return;
         }
 
-        consumer.accept("folia:tps-5s", formatTps(tps[0]));
-        consumer.accept("folia:tps-15s", formatTps(tps[1]));
-        consumer.accept("folia:tps-1m", formatTps(tps[2]));
-        consumer.accept("folia:tps-5m", formatTps(tps[3]));
-        consumer.accept("folia:tps-15m", formatTps(tps[4]));
+        if (tps.length >= 5) {
+            // Folia/Old Paper format: 5s, 15s, 1m, 5m, 15m
+            consumer.accept("folia:tps-5s", formatTps(tps[0]));
+            consumer.accept("folia:tps-15s", formatTps(tps[1]));
+            consumer.accept("folia:tps-1m", formatTps(tps[2]));
+            consumer.accept("folia:tps-5m", formatTps(tps[3]));
+            consumer.accept("folia:tps-15m", formatTps(tps[4]));
 
-        // General tps context (using 1m average)
-        consumer.accept("folia:tps", Integer.toString((int) Math.round(tps[2])));
+            // General tps context (using 1m average)
+            consumer.accept("folia:tps", Integer.toString((int) Math.round(tps[2])));
+        } else if (tps.length >= 3) {
+            // Standard Paper format: 1m, 5m, 15m
+            consumer.accept("folia:tps-1m", formatTps(tps[0]));
+            consumer.accept("folia:tps-5m", formatTps(tps[1]));
+            consumer.accept("folia:tps-15m", formatTps(tps[2]));
+
+            // General tps context (using 1m average)
+            consumer.accept("folia:tps", Integer.toString((int) Math.round(tps[0])));
+        }
+    }
+
+    private static double[] getTps(Location loc) {
+        try {
+            // Try to use the region-specific TPS if available (Folia/Older Paper)
+            java.lang.reflect.Method getRegionTPS = Bukkit.class.getMethod("getRegionTPS", Location.class);
+            return (double[]) getRegionTPS.invoke(null, loc);
+        } catch (Exception e) {
+            try {
+                // Fallback to global server TPS
+                return Bukkit.getTPS();
+            } catch (Exception e2) {
+                return null;
+            }
+        }
     }
 
     private static String formatTps(double tps) {

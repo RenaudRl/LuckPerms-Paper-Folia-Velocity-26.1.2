@@ -27,19 +27,27 @@ package me.lucko.luckperms.bukkit;
 
 import me.lucko.luckperms.common.plugin.scheduler.AbstractJavaScheduler;
 import me.lucko.luckperms.common.plugin.scheduler.SchedulerAdapter;
+import me.lucko.luckperms.common.plugin.scheduler.SchedulerTask;
 
 import java.util.concurrent.Executor;
 
 public class FoliaSchedulerAdapter extends AbstractJavaScheduler implements SchedulerAdapter {
+    private final LPBukkitBootstrap bootstrap;
     private final Executor sync;
 
     public FoliaSchedulerAdapter(LPBukkitBootstrap bootstrap) {
         super(bootstrap);
+        this.bootstrap = bootstrap;
         this.sync = r -> bootstrap.getServer().getGlobalRegionScheduler().execute(bootstrap.getLoader(), r);
     }
 
     @Override
     public Executor sync() {
         return this.sync;
+    }
+
+    @Override
+    public SchedulerTask executeSyncLater(Runnable task, long delayTicks) {
+        return this.bootstrap.getServer().getGlobalRegionScheduler().runDelayed(this.bootstrap.getLoader(), t -> task.run(), delayTicks)::cancel;
     }
 }
