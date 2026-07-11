@@ -29,6 +29,8 @@ import me.lucko.luckperms.bukkit.brigadier.LuckPermsBrigadier;
 import me.lucko.luckperms.bukkit.calculator.BukkitCalculatorFactory;
 import me.lucko.luckperms.bukkit.context.BukkitContextManager;
 import me.lucko.luckperms.bukkit.context.BukkitPlayerCalculator;
+import me.lucko.luckperms.bukkit.context.FoliaPlayerCalculator;
+import me.lucko.luckperms.bukkit.context.FoliaTpsCalculator;
 import me.lucko.luckperms.bukkit.inject.permissible.LuckPermsPermissible;
 import me.lucko.luckperms.bukkit.inject.permissible.PermissibleInjector;
 import me.lucko.luckperms.bukkit.inject.permissible.PermissibleMonitoringInjector;
@@ -189,6 +191,13 @@ public class LPBukkitPlugin extends AbstractLuckPermsPlugin {
         BukkitPlayerCalculator playerCalculator = new BukkitPlayerCalculator(this, getConfiguration().get(ConfigKeys.DISABLED_CONTEXTS));
         this.bootstrap.getServer().getPluginManager().registerEvents(playerCalculator, this.bootstrap.getLoader());
         this.contextManager.registerCalculator(playerCalculator);
+
+        if (LPBukkitBootstrap.isFolia()) {
+            FoliaPlayerCalculator foliaCalculator = new FoliaPlayerCalculator(this);
+            this.contextManager.registerCalculator(foliaCalculator);
+            FoliaTpsCalculator foliaTpsCalculator = new FoliaTpsCalculator(this);
+            this.contextManager.registerCalculator(foliaTpsCalculator);
+        }
     }
 
     @Override

@@ -314,7 +314,7 @@ public class LPBukkitBootstrap implements LuckPermsBootstrap, LoaderBootstrap, B
         }
     }
 
-    private static boolean isFolia() {
+    public static boolean isFolia() {
         try {
             Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
             return true;
